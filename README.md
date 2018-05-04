@@ -12,7 +12,7 @@ python app.py
 '''
 
 Structure:
-    /static     : JS, CSS, JSON
-    /templates  : Index page
-    app.py      : Flask server
-    data.csv    : Datasets
+    - /static     : JS, CSS, JSON
+    - /templates  : Index page
+    - app.py      : Flask server
+    - data.csv    : Datasets
