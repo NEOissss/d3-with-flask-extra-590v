@@ -63,4 +63,4 @@ if __name__ == '__main__':
     ind = dict(zip([str(i) for i in range(8)], [i for i in data]))
     countries = [i for i in data[ind['0']]]
     years = [i for i in data[ind['0']][countries[0]]]
-    app.run()
+    app.run(host='0.0.0.0')
