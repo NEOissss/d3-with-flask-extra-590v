@@ -1,0 +1,29 @@
+body {
+  padding-top: 95px;
+  background-color: #343a40;
+}
+.jumbotron {
+  padding: 30px; /* fills out the jumbotron */
+  background-color: #fff;
+}
+.jumbotron .jumbotron {
+    background-color: #fafbff;
+}
+.bar{
+    fill: rgb(31, 115, 170);
+}
+.svg-style{
+    display: block;
+    margin: auto;
+}
+.node circle {
+    stroke-width: 1.5px;
+}
+.node text {
+    font: 12px sans-serif;
+}
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}

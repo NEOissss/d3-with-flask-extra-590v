@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>590V Extra Credit Homework</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- D3 JS -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="static/main.css">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">UMass 590V (2018Spring)</a>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                  Homework
+                </a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="https://bl.ocks.org/NEOissss/raw/55c8637457f2a4e5b8d0ddec3ebb2e51/">HW1</a>
+                  <a class="dropdown-item" href="https://bl.ocks.org/NEOissss/raw/5a69f122bcecd0d76863766733a4e17f/">HW2</a>
+                  <a class="dropdown-item" href="https://bl.ocks.org/NEOissss/raw/49d3ecabb4b2461ed62ca44e7aa1fe55/">HW3</a>
+                  <a class="dropdown-item" href="https://bl.ocks.org/NEOissss/raw/f6009dcbaf1fe0dc4376820e7f2b01d8/">HW4</a>
+                  <a class="dropdown-item" href="https://bl.ocks.org/NEOissss/raw/bf8cf6d8a65b6da4e453c1dbb309269a/">HW5</a>
+                  <a class="dropdown-item" href="https://bl.ocks.org/NEOissss/raw/2df1363be4d2d82cfbed26b7d92dfcfe/">HW6</a>
+                  <a class="dropdown-item" href="#">Extra</a>
+                </div>
+              </li>
+            </ul>
+        </div>
+  </nav>
+  <div class="row justify-content-center">
+      <div class="container">
+          <div class="jumbotron">
+              <h2 style="text-align: center">World Population Data Analysis</h2>
+              <h3 style="text-align: center">Geng Luo</h3>
+              <p><br></p>
+              <h4>0. Introduction </h4>
+              <p>In this homework, I want to visualize some data about world population and its relatives. The dataset is from <a href="http://databank.worldbank.org">Data Bank</a>.
+              <p>Those indicators include :
+              <br>- Total population
+              <br>- Population growth (annual %)
+              <br>- Life expectancy at birth (years)
+              <br>- Fertility rate (births per woman)
+              <br>- Mortality rate, under-5 (per 1,000 live births)
+              <br>- Prevalence of HIV (% of population ages 15-49)
+              <br>- Energy use (kg of oil equivalent per capita)
+              <br>- GDP (current US$)
+              <p> The dataset include those indicators of 217 countries, ranging from 1960 to 2016. My visualizations are based on those data, and try to discover some interesting facts.
+
+              <h4>1. World Population Density</h4>
+              <p>At first, I want get a general view of population distribution over the world. The visualization shows the population density by countries. From the visualization, it is obvious to see that China and India are the most populous countries, followed by USA, Brazil and Russia. And by adjusting the year, the fact that almost every country keeps incresing in population is easy to see.
+              <p><b>Interaction included:</b>
+              <br>- Tooltip probing,
+              <br>- Select box,
+              <br>- Linked to visualization#2 (By clicking the country, the visualization#2 will load data of chosen country).
+              <div class="jumbotron" style="overflow: auto">
+                  <vis1></vis1>
+                  <p>Select Year:
+                  <select name="map" onchange="mapChange(this.value)">
+                    {% for item in years %}
+                    <option value="{{ item }}"{{ " selected=\"selected\"" if loop.last }}>{{ item }}</option>
+                    {% endfor %}
+                  </select>
+              </div>
+
+              <h4>2. Growth, Mortality and HIV</h4>
+              <p>In this section, I am interested in the details behind the population number. Here show these three indicators by year mentioned in the subtitle above. I found those populous countries'(mentioned in section#1) popiulation growth rate decreases graudually, and most countries' infant mortality rate keeps dropping. However, HIV is prevalent recently in many Africa countries like South Africa and Kenya.
+              <p><b>Interaction included:</b>
+              <br>- Tooltip probing,
+              <br>- Select box,
+              <br>- Interactive legends,
+              <br>- Linked to visualization#1.
+              <div class="jumbotron" style="overflow: auto">
+                  <vis2></vis2>
+                  <div id='tooltip' style='position:absolute;background-color:lightgray;padding:5px'></div>
+                  <p>Select Country:
+                  <select name="line" onchange="lineChange(this.value)">
+                    {% for item in countries %}
+                    <option value="{{ item }}"{{ " selected=\"selected\"" if loop.index==0 }}>{{ abbr[item] }}</option>
+                    {% endfor %}
+                  </select>
+              </div>
+
+              <h4>3. See the Trend</h4>
+              <p>By animate those circles on the scatter plot, I found some interesting trends of our world -- more populatin, lower fertility rate, and longer life expectancy, though there were some countries reverse to those trends due to war or revolution at some time.
+              <p><b>Interaction included:</b>
+              <br>- Tooltip probing,
+              <br>- Select box,
+              <br>- Animation effect,
+              <br>- Linked to visualization#4.
+              <div class="jumbotron" style="overflow: auto">
+                  <vis3></vis3>
+                  <p>Select Year:
+                  <select name="scatter" onchange="unionChange(this.value)">
+                    {% for item in years %}
+                    <option value="{{ item }}"{{ " selected=\"selected\"" if loop.index==0 }}>{{ item }}</option>
+                    {% endfor %}
+                  </select>
+                  <p>Click to play the animation:
+                  <button type="button" id="playScatter" data-loading-text="Playing..." class="btn btn-primary btn-sm ml-auto">Play</button>
+              </div>
+
+              <h4>4. Economic Performance</h4>
+              <p>This section show the relations among population, energy use, and GDP by year. Actually, just look at the third pie chart, you will find nothing really new here.
+              <p><b>Interaction included:</b>
+              <br>- Tooltip probing,
+              <br>- Select box,
+              <br>- Animation effect,
+              <br>- Linked to visualization#3.
+              <div class="jumbotron" style="overflow: auto">
+                  <div class="container" id="pies">
+                      <div class="row">
+                          <div class="col-sm-4 text-center"><h5>Population  </h5>
+                              <div class="row"><vis41></vis41></div></div>
+                          <div class="col-sm-4 text-center"><h5>Energy Use per Capita  </h5>
+                              <div class="row"><vis42></vis42></div></div>
+                          <div class="col-sm-4 text-center"><h5>Gross Demostic Product  </h5>
+                              <div class="row"><vis43></vis43></div></div>
+                      </div>
+                  </div>
+                  <p>Select Year:
+                  <select name="pie" onchange="unionChange(this.value)">
+                    {% for item in years %}
+                    <option value="{{ item }}"{{ " selected=\"selected\"" if loop.index==0 }}>{{ item }}</option>
+                    {% endfor %}
+                  </select>
+                  </select>
+                  <p>Click to play the animation:
+                  <button type="button" id="playPie" data-loading-text="Playing..." class="btn btn-primary btn-sm ml-auto">Play</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script src='static/main.js'></script>
+  <script src='static/map.js'></script>
+  <script src="static/line.js"></script>
+  <script src="static/scatter.js"></script>
+  <script src="static/pie.js"></script>
+
+</body>
+</html>
